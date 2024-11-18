@@ -13,35 +13,47 @@ window.addEventListener("click", function (event) {
       counter: card.querySelector("[data-counter]").innerText,
     };
 
-    const cartItemHtml = `<div class="cart-item" data-id="${productInfo.id}">
-								<div class="cart-item__top">
-									<div class="cart-item__img">
-										<img src="${productInfo.imgSrc}" alt="${productInfo.title}">
-									</div>
-									<div class="cart-item__desc">
-										<div class="cart-item__title">${productInfo.title}</div>
-										<div class="cart-item__weight">${productInfo.itemsInBox} / ${productInfo.weight}</div>
+    const ItemInCart = cartWrapper.querySelector(
+      `[data-id="${productInfo.id}"]`
+    );
+    console.log(ItemInCart);
 
-										<!-- cart-item__details -->
-										<div class="cart-item__details">
+    if (ItemInCart) {
+      const counterElement = ItemInCart.querySelector("[data-counter]");
+      counterElement.innerText =
+        parseInt(counterElement.innerText) + parseInt(productInfo.counter);
+    } else {
+      const cartItemHtml = `<div class="cart-item" data-id="${productInfo.id}">
+		<div class="cart-item__top">
+			<div class="cart-item__img">
+				<img src="${productInfo.imgSrc}" alt="${productInfo.title}">
+			</div>
+			<div class="cart-item__desc">
+				<div class="cart-item__title">${productInfo.title}</div>
+				<div class="cart-item__weight">${productInfo.itemsInBox} / ${productInfo.weight}</div>
 
-											<div class="items items--small counter-wrapper">
-												<div class="items__control" data-action="minus">-</div>
-												<div class="items__current" data-counter="">${productInfo.counter}</div>
-												<div class="items__control" data-action="plus">+</div>
-											</div>
+				<!-- cart-item__details -->
+				<div class="cart-item__details">
 
-											<div class="price">
-												<div class="price__currency">${productInfo.price}</div>
-											</div>
+					<div class="items items--small counter-wrapper">
+						<div class="items__control" data-action="minus">-</div>
+						<div class="items__current" data-counter="">${productInfo.counter}</div>
+						<div class="items__control" data-action="plus">+</div>
+					</div>
 
-										</div>
-										<!-- // cart-item__details -->
+					<div class="price">
+						<div class="price__currency">${productInfo.price}</div>
+					</div>
 
-									</div>
-								</div>
-							</div>`;
+				</div>
+				<!-- // cart-item__details -->
 
-    cartWrapper.insertAdjacentHTML("beforeend", cartItemHtml);
+			</div>
+		</div>
+	</div>`;
+
+      cartWrapper.insertAdjacentHTML("beforeend", cartItemHtml);
+    }
+	card.querySelector("[data-counter]").innerText = '1'
   }
 });
